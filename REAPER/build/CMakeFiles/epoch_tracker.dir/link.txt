@@ -1,0 +1,2 @@
+/usr/bin/ar qc libepoch_tracker.a CMakeFiles/epoch_tracker.dir/epoch_tracker/fft.cc.o CMakeFiles/epoch_tracker.dir/epoch_tracker/fd_filter.cc.o CMakeFiles/epoch_tracker.dir/epoch_tracker/lpc_analyzer.cc.o CMakeFiles/epoch_tracker.dir/epoch_tracker/epoch_tracker.cc.o
+/usr/bin/ranlib libepoch_tracker.a

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcore.a CMakeFiles/core.dir/core/file_resource.cc.o CMakeFiles/core.dir/core/float_matrix.cc.o CMakeFiles/core.dir/core/track.cc.o
+/usr/bin/ranlib libcore.a

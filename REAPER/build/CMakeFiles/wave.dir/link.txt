@@ -1,0 +1,2 @@
+/usr/bin/ar qc libwave.a CMakeFiles/wave.dir/wave/codec_riff.cc.o CMakeFiles/wave.dir/wave/wave.cc.o CMakeFiles/wave.dir/wave/wave_io.cc.o
+/usr/bin/ranlib libwave.a

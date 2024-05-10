@@ -1,0 +1,6 @@
+/content/NeuCoSVC-2/REAPER/build/CMakeFiles/core.dir
+/content/NeuCoSVC-2/REAPER/build/CMakeFiles/wave.dir
+/content/NeuCoSVC-2/REAPER/build/CMakeFiles/epoch_tracker.dir
+/content/NeuCoSVC-2/REAPER/build/CMakeFiles/reaper.dir
+/content/NeuCoSVC-2/REAPER/build/CMakeFiles/edit_cache.dir
+/content/NeuCoSVC-2/REAPER/build/CMakeFiles/rebuild_cache.dir
