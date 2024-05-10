@@ -80,7 +80,7 @@ def svc(model, src_wav_path, ref_wav_path, out_dir, device, f0_factor, speech_en
     out_wav = model.match(query_seq, f0_src, pitch_src, synth_set, topk=4, query_mask=query_mask)
     # out_wav is (T,) tensor converted 16kHz output wav using k=4 for kNN.
     os.makedirs(out_dir, exist_ok=True)
-    wfname = f'{out_dir}/{wav_name}_{ref_name}_{f0_factor:.2f}_NeuCoSVCv2.wav'
+    wfname = "output.wav" #f'{out_dir}/{wav_name}_{ref_name}_{f0_factor:.2f}_NeuCoSVCv2.wav'
 
     sf.write(wfname, out_wav.numpy(), 24000)
 
