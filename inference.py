@@ -80,7 +80,7 @@ def svc(model, src_wav_path, ref_wav_path, out_dir, device, f0_factor, speech_en
     out_wav = model.match(query_seq, f0_src, pitch_src, synth_set, topk=4, query_mask=query_mask)
     # out_wav is (T,) tensor converted 16kHz output wav using k=4 for kNN.
     os.makedirs(out_dir, exist_ok=True)
-    wfname = "output.wav" #f'{out_dir}/{wav_name}_{ref_name}_{f0_factor:.2f}_NeuCoSVCv2.wav'
+    wfname = f'{out_dir}/NeuCoSVCv2.wav'
 
     sf.write(wfname, out_wav.numpy(), 24000)
 
@@ -109,7 +109,7 @@ if __name__ == '__main__':
     parser.add_argument('--ref_wav_path', required=True)
     parser.add_argument('--model_ckpt_path',
                         default='ckpt/G_150k.pt')
-    parser.add_argument('--out_dir', default='output')
+    parser.add_argument('--out_dir', default='output_svc')
     parser.add_argument(
         '--key_shift', type=int,
         help='Adjust the pitch of the source singing. Tone the song up or down in semitones.'
