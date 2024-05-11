@@ -278,7 +278,7 @@ app = gr.Blocks()
 with app:
   gr.Markdown("# <center>🥳💕🎶 NeuCoSVC v2 AI歌手全明星，无需训练、一键翻唱、重磅更新！</center>")
   gr.Markdown("## <center>🌟 只需 1 个歌曲名，一键翻唱任意歌手的任意歌曲，支持说话语音翻唱，随时随地，听你想听！</center>")
-  gr.Markdown("### <center>🌊 NeuCoSVC v2 先享版 Powered by Tencent ARC Lab & Tsinghua University 💕</center>")
+  gr.Markdown("### <center>🌊 [NeuCoSVC v2](https://github.com/thuhcsi/NeuCoSVC) 先享版 Powered by Tencent ARC Lab & Tsinghua University 💕</center>")
   with gr.Row():
     with gr.Column():
       with gr.Row():
