@@ -3,9 +3,9 @@ import requests
 import json
 
 import urllib.request
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=7ddad0c7ff62005c07abf65312247e40&nonce=1715410496558", "ckpt/WavLM-Large.pt")
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=8d41e978ba2a71bbc2806282cc2534a2&nonce=1715410475018", "ckpt/G_150k.pt")
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=07a1f673b7732d2cd09014c0d8a9565b&nonce=1715410516017", "speech_XXL_cond.zip")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=971a42d686a15fcd3aafae29c1c97220&nonce=1715413418821", "ckpt/WavLM-Large.pt")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=07d507c87b7b9ed63556b7c094e6b0b5&nonce=1715413397933", "ckpt/G_150k.pt")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=0520b3273355818d1ebee030bce88ee4&nonce=1715413443250", "speech_XXL_cond.zip")
 urllib.request.urlretrieve("https://download.openxlab.org.cn/models/Kevin676/rvc-models/weight/UVR-HP2.pth", "uvr5/uvr_model/UVR-HP2.pth")
 urllib.request.urlretrieve("https://download.openxlab.org.cn/models/Kevin676/rvc-models/weight/UVR-HP5.pth", "uvr5/uvr_model/UVR-HP5.pth")
 
@@ -221,7 +221,7 @@ def youtube_downloader_100s(
     return f"./output/{split_model}/{filename}/vocal_{filename}.wav_10.wav", f"./output/{split_model}/{filename}/instrument_{filename}.wav_10.wav"
 
 
-def convert(start_time, song_name_src, song_name_ref, check_song, key_shift, vocal_vol, inst_vol):
+def convert(start_time, song_name_src, song_name_ref, check_song, auto_key, key_shift, vocal_vol, inst_vol):
   split_model = "UVR-HP5"
   song_name_ref = song_name_ref.strip().replace(" ", "")
   video_identifier = search_bilibili(song_name_ref)
@@ -250,10 +250,17 @@ def convert(start_time, song_name_src, song_name_ref, check_song, key_shift, voc
     os.remove("output_svc/NeuCoSVCv2.wav")
 
   if check_song == True:
-    os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift}")
+      if auto_key == True:
+          os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav")
+      else:
+          os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift}")
+ 
   else:
-    os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift} --speech_enroll")
-
+      if auto_key == True:
+          os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --speech_enroll")
+      else:
+          os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift} --speech_enroll")
+          
   audio_vocal = AudioSegment.from_file("output_svc/NeuCoSVCv2.wav", format="wav")
 
   # Load the second audio file
@@ -278,7 +285,7 @@ app = gr.Blocks()
 with app:
   gr.Markdown("# <center>🥳💕🎶 NeuCoSVC v2 AI歌手全明星，无需训练、一键翻唱、重磅更新！</center>")
   gr.Markdown("## <center>🌟 只需 1 个歌曲名，一键翻唱任意歌手的任意歌曲，支持说话语音翻唱，随时随地，听你想听！</center>")
-  gr.Markdown("### <center>🌊 NeuCoSVC v2 先享版 Powered by Tencent ARC Lab & Tsinghua University 💕</center>")
+  gr.Markdown("### <center>🌊 [NeuCoSVC v2](https://github.com/thuhcsi/NeuCoSVC) 先享版 Powered by Tencent ARC Lab & Tsinghua University 💕</center>")
   with gr.Row():
     with gr.Column():
       with gr.Row():
@@ -287,15 +294,16 @@ with app:
       with gr.Row():
         inp0 = gr.Number(value=0, label="起始时间 (秒)", info="此程序将自动从起始时间开始提取45秒的翻唱歌曲")
         inp3 = gr.Checkbox(label="参考音频是否为歌曲演唱，默认为是", info="如果参考音频为正常说话语音，请取消打勾", value=True)
-        inp4 = gr.Slider(minimum=-12, maximum=12, value=0, step=1, label="歌曲人声升降调", info="默认为0，+2为升高2个key，以此类推")
+        inp4 = gr.Checkbox(label="是否自动预测歌曲人声升降调，默认为是", info="如果需要手动调节歌曲人声升降调，请取消打勾", value=True)
+        inp5 = gr.Slider(minimum=-12, maximum=12, value=0, step=1, label="歌曲人声升降调", info="默认为0，+2为升高2个key，以此类推")
       with gr.Row():
-        inp5 = gr.Slider(minimum=-3, maximum=3, value=0, step=1, label="调节人声音量，默认为0")
-        inp6 = gr.Slider(minimum=-3, maximum=3, value=0, step=1, label="调节伴奏音量，默认为0")
+        inp6 = gr.Slider(minimum=-3, maximum=3, value=0, step=1, label="调节人声音量，默认为0")
+        inp7 = gr.Slider(minimum=-3, maximum=3, value=0, step=1, label="调节伴奏音量，默认为0")
       btn = gr.Button("一键开启AI翻唱之旅吧💕", variant="primary")
     with gr.Column():
       out = gr.Audio(label="AI歌手为您倾情演唱的歌曲", type="filepath", interactive=False)
 
-  btn.click(convert, [inp0, inp1, inp2, inp3, inp4, inp5, inp6], out)
+  btn.click(convert, [inp0, inp1, inp2, inp3, inp4, inp5, inp6, inp7], out)
 
   gr.Markdown("### <center>注意❗：请不要生成会对个人以及组织造成侵害的内容，此程序仅供科研、学习及个人娱乐使用。</center>")
   gr.HTML('''
