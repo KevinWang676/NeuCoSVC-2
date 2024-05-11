@@ -254,7 +254,7 @@ def convert(start_time, song_name_src, song_name_ref, check_song, key_shift, voc
   else:
     os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift} --speech_enroll")
 
-  audio_vocal = AudioSegment.from_file("output_svc/NeuCoSVCv2", format="wav")
+  audio_vocal = AudioSegment.from_file("output_svc/NeuCoSVCv2.wav", format="wav")
 
   # Load the second audio file
   audio_inst = AudioSegment.from_file(f"output/{split_model}/{song_id_src}/instrument_{song_id_src}.wav_10.wav", format="wav")
