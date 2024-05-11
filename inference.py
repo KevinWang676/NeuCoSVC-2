@@ -31,7 +31,7 @@ APPLIED_INFORMATION_WEIGHTS = [
 ]
 
 
-def svc(model, src_wav_path, ref_wav_path, out_dir, device, f0_factor, speech_enroll=False):
+def svc(model, src_wav_path, ref_wav_path, synth_set_path=None, f0_factor=0., speech_enroll=False, out_dir="output", hallucinated_set_path=None, device='cpu'):
     
     wav_name = os.path.basename(src_wav_path).split('.')[0]
     ref_name = os.path.basename(ref_wav_path).split('.')[0]
@@ -48,12 +48,14 @@ def svc(model, src_wav_path, ref_wav_path, out_dir, device, f0_factor, speech_en
     query_seq = model.get_features(
         src_wav_path, weights=synth_weights)
 
-    synth_set_path = f"matching_set/{ref_name}.pt"
-    synth_set = model.get_matching_set(ref_wav_path, out_path=synth_set_path).to(device)
-    hallucinated_set_path = f"matching_set/hallucinated_set/{ref_name}_hallucinated_15k.npy"
-    os.system(f"python Phoneme_Hallucinator_v2/scripts/speech_expansion_ins.py --cfg_file Phoneme_Hallucinator_v2/exp/speech_XXL_cond/params.json --num_samples 15000 --path {synth_set_path} --out_path {hallucinated_set_path}")
-    hallucinated_set = torch.from_numpy(np.load(hallucinated_set_path)).to(device)
-    synth_set = torch.cat([synth_set, hallucinated_set], dim=0)
+    if synth_set_path:
+        synth_set = torch.load(synth_set_path).to(device)
+    else:
+        synth_set = model.get_matching_set(ref_wav_path).to(device)
+
+    if hallucinated_set_path:
+        hallucinated_set = torch.from_numpy(np.load(hallucinated_set_path)).to(device)
+        synth_set = torch.cat([synth_set, hallucinated_set], dim=0)
     
     query_len = query_seq.shape[0]
     if len(query_mask) > query_len:
@@ -97,7 +99,7 @@ def main(a):
     model = SVCNN(model_ckpt_path, device=device)
 
     t0 = time.time()
-    svc(model, a.src_wav_path, a.ref_wav_path, a.out_dir, device, f0factor, speech_enroll)
+    svc(model, a.src_wav_path, a.ref_wav_path, out_dir=a.out_dir, device=device, f0_factor=f0factor, speech_enroll=speech_enroll)
     t1 = time.time()
     print(f"{t1-t0:.2f}s to perfrom the conversion")
 
