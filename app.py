@@ -2,6 +2,15 @@ import re, os
 import requests
 import json
 
+import urllib.request
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=a8b59353548b49e17ad5a545125e65de&nonce=1715404014043", "ckpt/WavLM-Large.pt")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=243850f5b7dae4541a2f62a0f5461288&nonce=1715404030809", "ckpt/G_150k.pt")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=0e243a902ee5c60937413cc454b217bf&nonce=1715403982579", "speech_XXL_cond.zip")
+
+import zipfile
+with zipfile.ZipFile("speech_XXL_cond.zip", 'r') as zip_ref:
+    zip_ref.extractall("Phoneme_Hallucinator_v2/exp")
+
 headers = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
 }
