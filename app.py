@@ -3,9 +3,9 @@ import requests
 import json
 
 import urllib.request
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=92c3cb284efa2cbec6bf927ed8ae1adb&nonce=1715417851452", "ckpt/WavLM-Large.pt")
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=5f5a191bc6c67230204219cb79661f3e&nonce=1715417867834", "ckpt/G_150k.pt")
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=068d0654c3d07b59317316953a2069f7&nonce=1715417887941", "speech_XXL_cond.zip")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=57fa9f151e6c9b9c9e1f784f0c64ecc5&nonce=1715420216902", "ckpt/WavLM-Large.pt")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=a9c67e7da5e3c3b839a233a25972e01d&nonce=1715420243395", "ckpt/G_150k.pt")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=4609f2f4d18fefb33b656cf462ef083f&nonce=1715420263779", "speech_XXL_cond.zip")
 urllib.request.urlretrieve("https://download.openxlab.org.cn/models/Kevin676/rvc-models/weight/UVR-HP2.pth", "uvr5/uvr_model/UVR-HP2.pth")
 urllib.request.urlretrieve("https://download.openxlab.org.cn/models/Kevin676/rvc-models/weight/UVR-HP5.pth", "uvr5/uvr_model/UVR-HP5.pth")
 
