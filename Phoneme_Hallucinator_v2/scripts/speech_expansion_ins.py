@@ -1,15 +1,15 @@
 import os
 import sys
 import time
-p = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
-sys.path.append(p)
+# p = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
+# sys.path.append(p)
 import argparse
 import numpy as np
 import tensorflow as tf
 tf.compat.v1.disable_v2_behavior()
 
-from utils.hparams import HParams
-from models import get_model
+from ..utils.hparams import HParams
+from ..models import get_model
 import torch
 
 
