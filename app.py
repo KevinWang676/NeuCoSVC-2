@@ -312,7 +312,7 @@ with app:
         inp7 = gr.Slider(minimum=-3, maximum=3, value=0, step=1, label="调节伴奏音量，默认为0")
       btn = gr.Button("一键开启AI翻唱之旅吧💕", variant="primary")
     with gr.Column():
-      ref_audio = gr.Audio(label="您也可以选择从本地上传一段音色参考音频", info="需要为去除伴奏后的音频，建议上传长度为60~90s左右的.wav文件；如果您希望通过歌曲名自动提取参考音频，请勿在此上传音频文件", type="filepath", interactive=True)
+      ref_audio = gr.Audio(label="您也可以选择从本地上传一段音色参考音频。需要为去除伴奏后的音频，建议上传长度为60~90s左右的.wav文件；如果您希望通过歌曲名自动提取参考音频，请勿在此上传音频文件", type="filepath", interactive=True)
       out = gr.Audio(label="AI歌手为您倾情演唱的歌曲", type="filepath", interactive=False)
 
   btn.click(convert, [inp0, inp1, inp2, ref_audio, inp3, inp4, inp5, inp6, inp7], out)
