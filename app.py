@@ -226,15 +226,19 @@ def youtube_downloader_100s(
 
 def convert(start_time, song_name_src, song_name_ref, ref_audio, check_song, auto_key, key_shift, vocal_vol, inst_vol):
   split_model = "UVR-HP5"
-  song_name_ref = song_name_ref.strip().replace(" ", "")
-  video_identifier = search_bilibili(song_name_ref)
-  song_id = get_bilibili_video_id(video_identifier)
+  #song_name_ref = song_name_ref.strip().replace(" ", "")
+  #video_identifier = search_bilibili(song_name_ref)
+  #song_id = get_bilibili_video_id(video_identifier)
 
   song_name_src = song_name_src.strip().replace(" ", "")
   video_identifier_src = search_bilibili(song_name_src)
   song_id_src = get_bilibili_video_id(video_identifier_src)
 
   if ref_audio is None:
+      song_name_ref = song_name_ref.strip().replace(" ", "")
+      video_identifier = search_bilibili(song_name_ref)
+      song_id = get_bilibili_video_id(video_identifier)
+
       if os.path.isdir(f"./output/{split_model}/{song_id}")==False:
         audio, sr = librosa.load(youtube_downloader_100s(video_identifier, song_id, split_model)[0], sr=24000, mono=True)
         soundfile.write("audio_ref.wav", audio, sr)
