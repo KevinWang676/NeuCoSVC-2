@@ -6,9 +6,9 @@ import torch
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 import urllib.request
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=9aff3ae54e786557bff49a12a6607bf2&nonce=1715435888258", "ckpt/WavLM-Large.pt")
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=a070012d3ee9c2ac36d2db9607c3d105&nonce=1715435904634", "ckpt/G_150k.pt")
-urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=109cc532a451ca0e7217a98e9c91199e&nonce=1715435860111", "speech_XXL_cond.zip")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=f54cc567be750e5414d2817b87390e1f&nonce=1715436540924", "ckpt/WavLM-Large.pt")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=a050ff3b0bf168317ba2880294da75a0&nonce=1715436555803", "ckpt/G_150k.pt")
+urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=209787fb0a760627f567121349b7a93e&nonce=1715436574748", "speech_XXL_cond.zip")
 urllib.request.urlretrieve("https://download.openxlab.org.cn/models/Kevin676/rvc-models/weight/UVR-HP2.pth", "uvr5/uvr_model/UVR-HP2.pth")
 urllib.request.urlretrieve("https://download.openxlab.org.cn/models/Kevin676/rvc-models/weight/UVR-HP5.pth", "uvr5/uvr_model/UVR-HP5.pth")
 
