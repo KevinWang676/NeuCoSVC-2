@@ -1,6 +1,9 @@
 import re, os
 import requests
 import json
+import torch
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 import urllib.request
 urllib.request.urlretrieve("https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=57fa9f151e6c9b9c9e1f784f0c64ecc5&nonce=1715420216902", "ckpt/WavLM-Large.pt")
@@ -86,14 +89,14 @@ func = AudioPre
 pre_fun_hp2 = func(
   agg=int(10),
   model_path=os.path.join(weight_uvr5_root, "UVR-HP2.pth"),
-  device="cuda",
+  device=device,
   is_half=True,
 )
 
 pre_fun_hp5 = func(
   agg=int(10),
   model_path=os.path.join(weight_uvr5_root, "UVR-HP5.pth"),
-  device="cuda",
+  device=device,
   is_half=True,
 )
 
