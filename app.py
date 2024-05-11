@@ -248,11 +248,8 @@ def convert(start_time, song_name_src, song_name_ref, ref_audio, check_song, aut
     
       vad("audio_ref.wav")
   else:   
-      multi_channel_audio = AudioSegment.from_file(ref_audio, format="wav")
+      vad(ref_audio)
 
-      mono_audio = multi_channel_audio.set_channels(1)
-
-      mono_audio.export("voiced_audio.wav", format="wav")
 
 
   #if os.path.isdir(f"./output/{split_model}/{song_id_src}")==False:
