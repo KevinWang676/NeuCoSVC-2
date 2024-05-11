@@ -235,17 +235,15 @@ def convert(start_time, song_name_src, song_name_ref, check_song, key_shift, voc
   #else:
   #  audio_src, sr_src = librosa.load(f"./output/{split_model}/{song_id_src}/vocal_{song_id_src}.wav_10.wav", sr=24000, mono=True)
   #  soundfile.write("audio_src.wav", audio_src, sr_src)
-  if os.path.isfile("output.wav"):
-    os.remove("output.wav")
+  if os.path.isfile("output_svc/NeuCoSVCv2.wav"):
+    os.remove("output_svc/NeuCoSVCv2.wav")
 
   if check_song == True:
     os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift}")
   else:
     os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift} --speech_enroll")
 
-
-
-  audio_vocal = AudioSegment.from_file("output.wav", format="wav")
+  audio_vocal = AudioSegment.from_file("output_svc/NeuCoSVCv2", format="wav")
 
   # Load the second audio file
   audio_inst = AudioSegment.from_file(f"output/{split_model}/{song_id_src}/instrument_{song_id_src}.wav_10.wav", format="wav")
