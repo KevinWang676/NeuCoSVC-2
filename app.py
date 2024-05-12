@@ -32,13 +32,13 @@ def download_file_openxlab(url, destination):
         print("Retrying in 5 seconds...")
         time.sleep(5)
 
-url_wavlm = "https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=89daf3e85399b72faf069c4fd90e5eff&nonce=1715499004366"
+url_wavlm = "https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=WavLM-Large.pt&sign=8709eb4a04c8ece3c9a4a60da9bc599d&nonce=1715530678727"
 destination_wavlm = "ckpt/WavLM-Large.pt"
 
-url_G_150k = "https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=b017ae3fb6205702734912fc9758a77c&nonce=1715499056048"
+url_G_150k = "https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-2/main?filepath=G_150k.pt&sign=fd8b8bdbd149101ed9a0c385ca47af6d&nonce=1715530698880"
 destination_G_150k = "ckpt/G_150k.pt"
 
-url_speech = "https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=8b7a7703baab84da9667e77d8ce26928&nonce=1715499076978"
+url_speech = "https://download.openxlab.org.cn/repos/file/Kevin676/NeuCoSVC-v2/main?filepath=speech_XXL_cond.zip&sign=0dd279a21bed1e5e06edafb85d9a1c38&nonce=1715530716241"
 destination_speech = "speech_XXL_cond.zip"
 
 download_file_openxlab(url_wavlm, destination_wavlm)
