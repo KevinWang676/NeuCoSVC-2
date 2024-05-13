@@ -238,9 +238,9 @@ def youtube_downloader_100s(
     os.makedirs("output", exist_ok=True)
     audio_orig = AudioSegment.from_file(audio_path)
 
-    if len(audio_orig) > 180000:
+    if len(audio_orig) > 200000:
       start_ms = 30000
-      end_ms = start_ms + 150000
+      end_ms = start_ms + 170000
 
       # Extract the segment
 
