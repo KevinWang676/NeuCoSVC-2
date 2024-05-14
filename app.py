@@ -319,22 +319,25 @@ def convert(start_time, song_name_src, song_name_ref, src_audio, ref_audio, chec
           os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --speech_enroll")
       else:
           os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift} --speech_enroll")
-          
-  audio_vocal = AudioSegment.from_file("output_svc/NeuCoSVCv2.wav", format="wav")
 
-  # Load the second audio file
-  audio_inst = AudioSegment.from_file(f"output/{split_model}/{song_id_src}/instrument_{song_id_src}.wav_10.wav", format="wav")
-
-  audio_vocal = audio_vocal + vocal_vol  # Increase volume of the first audio by 5 dB
-  audio_inst = audio_inst + inst_vol  # Decrease volume of the second audio by 5 dB
-
-  # Concatenate audio files
-  combined_audio = audio_vocal.overlay(audio_inst)
-
-  # Export the concatenated audio to a new file
-  combined_audio.export(f"{song_name_src}-AI翻唱.wav", format="wav")
-
-  return f"{song_name_src}-AI翻唱.wav"
+  if src_audio is None:
+      return "output_svc/NeuCoSVCv2.wav"
+  else:
+      audio_vocal = AudioSegment.from_file("output_svc/NeuCoSVCv2.wav", format="wav")
+    
+      # Load the second audio file
+      audio_inst = AudioSegment.from_file(f"output/{split_model}/{song_id_src}/instrument_{song_id_src}.wav_10.wav", format="wav")
+    
+      audio_vocal = audio_vocal + vocal_vol  # Increase volume of the first audio by 5 dB
+      audio_inst = audio_inst + inst_vol  # Decrease volume of the second audio by 5 dB
+    
+      # Concatenate audio files
+      combined_audio = audio_vocal.overlay(audio_inst)
+    
+      # Export the concatenated audio to a new file
+      combined_audio.export(f"{song_name_src}-AI翻唱.wav", format="wav")
+    
+      return f"{song_name_src}-AI翻唱.wav"
 
 
 
