@@ -271,7 +271,7 @@ def convert(start_time, song_name_src, song_name_ref, src_audio, ref_audio, chec
   else:
       src_audio_orig = AudioSegment.from_file(src_audio)
       if len(src_audio_orig) > 45000:
-          segment = audio_orig[0:45000]
+          segment = src_audio_orig[0:45000]
           segment.export("segment.wav", format="wav")
           multi_channel_audio = AudioSegment.from_file("segment.wav", format="wav")
           mono_audio = multi_channel_audio.set_channels(1)
