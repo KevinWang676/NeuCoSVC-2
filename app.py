@@ -359,4 +359,5 @@ with app:
       </div>
   ''')
 
-app.queue().launch(show_error=True)
+app.queue(max_size=40, api_open=False)
+app.launch(max_threads=400, show_error=True)
