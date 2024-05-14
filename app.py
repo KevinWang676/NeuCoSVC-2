@@ -321,8 +321,6 @@ def convert(start_time, song_name_src, song_name_ref, src_audio, ref_audio, chec
           os.system(f"python inference.py --src_wav_path audio_src.wav --ref_wav_path voiced_audio.wav --key_shift {key_shift} --speech_enroll")
 
   if src_audio is None:
-      return "output_svc/NeuCoSVCv2.wav"
-  else:
       audio_vocal = AudioSegment.from_file("output_svc/NeuCoSVCv2.wav", format="wav")
     
       # Load the second audio file
@@ -338,7 +336,8 @@ def convert(start_time, song_name_src, song_name_ref, src_audio, ref_audio, chec
       combined_audio.export(f"{song_name_src}-AI翻唱.wav", format="wav")
     
       return f"{song_name_src}-AI翻唱.wav"
-
+  else:
+      return "output_svc/NeuCoSVCv2.wav"
 
 
 app = gr.Blocks()
