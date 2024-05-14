@@ -257,15 +257,29 @@ def youtube_downloader_100s(
     return f"./output/{split_model}/{filename}/vocal_{filename}.wav_10.wav", f"./output/{split_model}/{filename}/instrument_{filename}.wav_10.wav"
 
 
-def convert(start_time, song_name_src, song_name_ref, ref_audio, check_song, auto_key, key_shift, vocal_vol, inst_vol):
+def convert(start_time, song_name_src, song_name_ref, src_audio, ref_audio, check_song, auto_key, key_shift, vocal_vol, inst_vol):
   split_model = "UVR-HP5"
   #song_name_ref = song_name_ref.strip().replace(" ", "")
   #video_identifier = search_bilibili(song_name_ref)
   #song_id = get_bilibili_video_id(video_identifier)
-
-  song_name_src = song_name_src.strip().replace(" ", "")
-  video_identifier_src = search_bilibili(song_name_src)
-  song_id_src = get_bilibili_video_id(video_identifier_src)
+  if src_audio is None:
+      song_name_src = song_name_src.strip().replace(" ", "")
+      video_identifier_src = search_bilibili(song_name_src)
+      song_id_src = get_bilibili_video_id(video_identifier_src)
+      audio_src, sr_src = librosa.load(youtube_downloader(video_identifier_src, song_id_src, split_model, start_time)[0], sr=24000, mono=True)
+      soundfile.write("audio_src.wav", audio_src, sr_src)
+  else:
+      src_audio_orig = AudioSegment.from_file(src_audio)
+      if len(src_audio_orig) > 45000:
+          segment = audio_orig[0:45000]
+          segment.export("segment.wav", format="wav")
+          multi_channel_audio = AudioSegment.from_file("segment.wav", format="wav")
+          mono_audio = multi_channel_audio.set_channels(1)
+          mono_audio.export("audio_src.wav", format="wav")
+      else:
+          multi_channel_audio = AudioSegment.from_file(src_audio, format="wav")
+          mono_audio = multi_channel_audio.set_channels(1)
+          mono_audio.export("audio_src.wav", format="wav")
 
   if ref_audio is None:
       song_name_ref = song_name_ref.strip().replace(" ", "")
@@ -286,8 +300,8 @@ def convert(start_time, song_name_src, song_name_ref, ref_audio, check_song, aut
 
 
   #if os.path.isdir(f"./output/{split_model}/{song_id_src}")==False:
-  audio_src, sr_src = librosa.load(youtube_downloader(video_identifier_src, song_id_src, split_model, start_time)[0], sr=24000, mono=True)
-  soundfile.write("audio_src.wav", audio_src, sr_src)
+  #audio_src, sr_src = librosa.load(youtube_downloader(video_identifier_src, song_id_src, split_model, start_time)[0], sr=24000, mono=True)
+  #soundfile.write("audio_src.wav", audio_src, sr_src)
   #else:
   #  audio_src, sr_src = librosa.load(f"./output/{split_model}/{song_id_src}/vocal_{song_id_src}.wav_10.wav", sr=24000, mono=True)
   #  soundfile.write("audio_src.wav", audio_src, sr_src)
@@ -346,10 +360,12 @@ with app:
         inp7 = gr.Slider(minimum=-3, maximum=3, value=0, step=1, label="调节伴奏音量，默认为0")
       btn = gr.Button("一键开启AI翻唱之旅吧💕", variant="primary")
     with gr.Column():
-      ref_audio = gr.Audio(label="您也可以选择从本地上传一段音色参考音频。需要为去除伴奏后的音频，建议上传长度为60~90s左右的.wav文件；如果您希望通过歌曲名自动提取参考音频，请勿在此上传音频文件", type="filepath", interactive=True)
+      with gr.Row():
+        src_audio = gr.Audio(label="从本地上传一段想要AI翻唱的音频。需要为去除伴奏后的音频，此程序将自动提取前45秒的音频；如果您希望通过歌曲名搜索在线音频，请勿在此上传音频文件", type="filepath", interactive=True)
+        ref_audio = gr.Audio(label="从本地上传一段音色参考音频。需要为去除伴奏后的音频，建议上传长度为60~90s左右的.wav文件；如果您希望通过歌曲名搜索在线音频，请勿在此上传音频文件", type="filepath", interactive=True)
       out = gr.Audio(label="AI歌手为您倾情演唱的歌曲🎶", type="filepath", interactive=False)
 
-  btn.click(convert, [inp0, inp1, inp2, ref_audio, inp3, inp4, inp5, inp6, inp7], out)
+  btn.click(convert, [inp0, inp1, inp2, src_audio, ref_audio, inp3, inp4, inp5, inp6, inp7], out)
 
   gr.Markdown("### <center>注意❗：请不要生成会对个人以及组织造成侵害的内容，此程序仅供科研、学习及个人娱乐使用。</center>")
   gr.HTML('''
